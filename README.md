@@ -51,29 +51,33 @@ property-underwriter/
 ---
 ## 🏗️ System Architecture
 
-The project decouples core reasoning logic, tool execution, and deployment orchestration into three dedicated layers:
-[ User / Underwriting Request ]
-              │
-              ▼
-┌───────────────────────────────────────────┐
-│         ANTIGRAVITY WORKFLOW LAYER        │
-│  - Environment Validation & Init          │
-│  - Runtime Orchestration (uv / dotenv)    │
-└─────────────────┬─────────────────────────┘
-│
-▼
-┌───────────────────────────────────────────┐
-│             ADK AGENT ENGINE              │
-│  - Property Underwriter Brain             │
-│  - Risk Analysis & Evaluation Prompts     │
-└─────────────────▲─────────────────────────┘
-│  (Secure Protocol)
-▼
-┌───────────────────────────────────────────┐
-│             LOCAL MCP SERVER              │
-│  - Tool: fetch_property_records()         │
-│  - Tool: evaluate_hazard_zones()          │
-└───────────────────────────────────────────┘
+The project cleanly decouples core reasoning logic, secure tool execution, and deployment orchestration into three dedicated layers:
+
+```text
+       ┌─────────────────────────────────────────────────────────┐
+       │               USER / UNDERWRITING REQUEST               │
+       └────────────────────────────┬────────────────────────────┘
+                                    │
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │               ANTIGRAVITY WORKFLOW LAYER                │
+       │  • Environment Validation & Security Initialization     │
+       │  • High-Speed Runtime Orchestration (uv / dotenv)      │
+       └────────────────────────────┬────────────────────────────┘
+                                    │
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │                    ADK AGENT ENGINE                     │
+       │  • Property Underwriter Brain & Persona                │
+       │  • Risk Analysis & Strategic Evaluation Prompts        │
+       └────────────────────────────▲────────────────────────────┘
+                                    │  (Secure Protocol)
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │                    LOCAL MCP SERVER                     │
+       │  • Tool 1: fetch_property_records()                     │
+       │  • Tool 2: evaluate_hazard_zones()                      │
+       └─────────────────────────────────────────────────────────┘
 
 
 ### 🔄 Data Flow Pipeline
