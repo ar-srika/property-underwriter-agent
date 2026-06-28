@@ -1,0 +1,31 @@
+[0:00 - HOOK]
+Are you tired of spending hours manually auditing commercial property questionnaires and cross-referencing complex fire safety codes? Our new automated underwriting agent cuts down risk assessment from hours to seconds while maintaining absolute compliance and human oversight.
+
+[0:20 - WHAT IT IS]
+This is the Property Underwriter Risk Assessment Agent, built on the Google Agent Development Kit framework, designed specifically to parse risk questionnaires, score properties against underwriting matrices, and seamlessly coordinate human reviews.
+
+[0:40 - SHOW THE BANNER]
+(show assets/cover_page_banner.png)
+At a glance, the Property Underwriter is an automated, secure, and intelligent risk evaluation platform that handles commercial policy reviews.
+
+[1:00 - ARCHITECTURE]
+(show assets/architecture_diagram.png)
+Let us look at the architecture. When a property risk questionnaire is submitted, it enters our Security Checkpoint node. This node scrubs policyholder PII, flags prompt injections, and applies domain restrictions. (pause)
+Next, the scrubbed questionnaire is sent to our Lead Underwriter Orchestrator. (pause)
+The orchestrator delegates to two specialized LlmAgents: the Compliance Validator Agent and the Scoring Agent. (pause)
+These agents make use of our local MCP server tools to pull live fire protection standards, underwriting guidelines, and risk scoring matrices. (pause)
+The findings converge on a Decision Gate. If the calculated score is in the borderline zone of 40 to 75 points, the workflow pauses at the HITL Review Node, requiring manual sign-off from a licensed underwriter. Otherwise, it routes directly to Finalize Decision to output a structured JSON verdict.
+
+[2:00 - LIVE DEMO]
+(switch to playground at localhost:18081)
+Let me show you a live demo of three test cases in our local playground.
+First, we submit a Safe Low-Risk property questionnaire. The agent extracts a clean score of 30, bypasses human review, and auto-approves it instantly.
+Second, let us input a Borderline Risk questionnaire. Alice Smith submits an application with no sprinkler systems. The security checkpoint scrubs Alice's name, email, and phone number. The orchestrator delegates, and the scoring agent returns a score of 70. Watch as the UI halts execution and displays the "underwriter_approval" prompt. I click "Approve" (pause), and the workflow resumes, producing the finalized contract terms.
+Third, let us try a prohibited hazard. We submit an application referencing "knob-and-tube wiring". The security checkpoint identifies this prohibited hazard immediately, bypassing all sub-agents, and auto-rejects the application for safety violations.
+
+[3:00 - SECURITY & MCP]
+(show assets/architecture_diagram.png)
+Our security checkpoint uses strict regex patterns to protect policyholder privacy, checks keywords to block injection attempts, and writes structured JSON audit logs for corporate compliance. Our custom Model Context Protocol server exposes tools to extract text from PDF questionnaires and read dynamic safety and compliance files directly from the local file system.
+
+[3:30 - IMPACT / CLOSE]
+By combining multi-agent reasoning, deterministic routing, and secure human-in-the-loop validation, we enable underwriting teams to issue quotes faster, eliminate compliance errors, and scale property risk assessment safely. Thank you!
