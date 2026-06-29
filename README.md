@@ -2,6 +2,11 @@
 
 Automated multi-agent workflow for assessing and scoring property risks against compliance standards and underwriting guidelines.
 
+> **🚀 Core Course Concepts Demonstrated:**
+> 1. **Agent / Multi-Agent System (ADK):** Powers the core underwriting intelligence and evaluation loop.
+> 2. **Model Context Protocol (MCP) Server:** Securely decouples external property data queries from the LLM context layer.
+> 3. **Antigravity:** Implements the rapid-setup deployment workflow and efficient orchestration schemas.
+
 ## Project Structure
 
 ```text
@@ -44,6 +49,44 @@ property-underwriter/
    ```
 
 ---
+## 🏗️ System Architecture
+
+The project cleanly decouples core reasoning logic, secure tool execution, and deployment orchestration into three dedicated layers:
+
+```text
+       ┌─────────────────────────────────────────────────────────┐
+       │               USER / UNDERWRITING REQUEST               │
+       └────────────────────────────┬────────────────────────────┘
+                                    │
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │               ANTIGRAVITY WORKFLOW LAYER                │
+       │  • Environment Validation & Security Initialization     │
+       │  • High-Speed Runtime Orchestration (uv / dotenv)      │
+       └────────────────────────────┬────────────────────────────┘
+                                    │
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │                    ADK AGENT ENGINE                     │
+       │  • Property Underwriter Brain & Persona                │
+       │  • Risk Analysis & Strategic Evaluation Prompts        │
+       └────────────────────────────▲────────────────────────────┘
+                                    │  (Secure Protocol)
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │                    LOCAL MCP SERVER                     │
+       │  • Tool 1: fetch_property_records()                     │
+       │  • Tool 2: evaluate_hazard_zones()                      │
+       └─────────────────────────────────────────────────────────┘
+
+
+### 🔄 Data Flow Pipeline
+1. **Initiation:** The **Antigravity** script initializes the runtime environment, loads `.env` secure variables, and boosts the processing loop.
+2. **Analysis:** The **ADK Agent** takes an address or asset profile and constructs the evaluation framework.
+3. **Execution:** When specific real-world checks are needed, the agent makes a structured call across the **Model Context Protocol (MCP)** boundary to retrieve local database rows or risk maps securely.
+4. **Output:** The agent synthesizes a finalized Underwriting Risk Report and premium tier.
+
+
 
 ## Solution Architecture
 
@@ -123,9 +166,33 @@ graph TD
 
 ---
 
-## Demo Script
+## ⚡ Quick Start & Sample Input
 
-A spoken presentation script is available in [DEMO_SCRIPT.txt](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/DEMO_SCRIPT.txt) to guide you during UI walks.
+Ensure your prerequisites are active (`source .venv/bin/activate`), then run the primary interface script. 
+
+### Running the Agent
+```bash
+python main.py
+
+Sample Input Query
+When prompted by the agent interface, you can copy-paste the following benchmark payload to verify system functionality:
+
+{
+  "property_address": "100 Commercial Blvd, Suite A",
+  "building_type": "Reinforced Concrete / Commercial Office",
+  "year_built": 2018,
+  "requested_coverage_limit": 5000000
+}
+
+Expected Output Structure
+The agent will return a structured evaluation containing:
+
+Risk Score: (1-10 Scale based on structural metrics)
+MCP Data Fetched: Confirmation of tool execution logs.
+Underwriting Decision: Approved / Flagged for Manual Review.
+Suggested Premium Tier: Calculated baseline expense.
+
+
 
 ---
 

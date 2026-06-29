@@ -58,6 +58,8 @@ def get_risk_scoring_matrix() -> str:
             "No Sprinklers: +20 points\n"
             "Building Age > 40 years: +10 points\n"
             "Knob and Tube Wiring: +30 points\n"
+            "Sprinkler System Present (Automatic Wet Pipe): -25 points\n"
+            "Building Age < 5 years: -10 points\n"
             "Ratings:\n"
             "Score < 40: Low Risk (Auto-Approve)\n"
             "Score 40-75: Medium Risk (HITL review required)\n"
