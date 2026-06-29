@@ -15,10 +15,15 @@ from google.adk.models import Gemini
 from .config import config
 
 # Define MCP toolset to connect to our local MCP server
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 mcp_toolset = MCPToolset(
     connection_params=StdioServerParameters(
         command=sys.executable,
         args=["-m", "app.mcp_server"],
+        env={
+            **os.environ,
+            "PYTHONPATH": project_root,
+        }
     )
 )
 
