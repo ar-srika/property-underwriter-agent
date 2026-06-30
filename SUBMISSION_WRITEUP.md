@@ -34,11 +34,11 @@ graph TD
 
 ## Concepts Used
 
-- **ADK Workflow**: The entire control flow is orchestrating by an ADK 2.0 graph-based `Workflow` class in [app/agent.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/agent.py#L245-L258) using explicit `Edge` connections to guarantee deterministic routing.
-- **LlmAgent / Agent**: Specialized sub-agents (`compliance_agent` and `scoring_agent`) are defined in [app/agent.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/agent.py#L15-L39) to handle specific sub-tasks instead of a single monolithic prompt.
-- **AgentTool**: The orchestrator (`underwriter_orchestrator`) utilizes `AgentTool` in [app/agent.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/agent.py#L68-L71) to delegate sub-tasks to the compliance and scoring sub-agents.
-- **MCP Server**: FastMCP server in [app/mcp_server.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/mcp_server.py) exposes tools to parse PDFs and read local standards, guidelines, and matrices. It is wired into both sub-agents via `MCPToolset` in [app/agent.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/agent.py#L28-L41).
-- **Security Checkpoint**: The `security_checkpoint` workflow function node in [app/agent.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/agent.py#L74-L121) scrubs PII, deters prompt injection, and applies a domain safety rule to intercept knob-and-tube hazards.
+- **ADK Workflow**: The entire control flow is orchestrating by an ADK 2.0 graph-based `Workflow` class in [app/agent.py](app/agent.py#L245-L258) using explicit `Edge` connections to guarantee deterministic routing.
+- **LlmAgent / Agent**: Specialized sub-agents (`compliance_agent` and `scoring_agent`) are defined in [app/agent.py](app/agent.py#L15-L39) to handle specific sub-tasks instead of a single monolithic prompt.
+- **AgentTool**: The orchestrator (`underwriter_orchestrator`) utilizes `AgentTool` in [app/agent.py](app/agent.py#L68-L71) to delegate sub-tasks to the compliance and scoring sub-agents.
+- **MCP Server**: FastMCP server in [app/mcp_server.py](app/mcp_server.py) exposes tools to parse PDFs and read local standards, guidelines, and matrices. It is wired into both sub-agents via `MCPToolset` in [app/agent.py](app/agent.py#L28-L41).
+- **Security Checkpoint**: The `security_checkpoint` workflow function node in [app/agent.py](app/agent.py#L74-L121) scrubs PII, deters prompt injection, and applies a domain safety rule to intercept knob-and-tube hazards.
 - **Agents CLI**: Project scaffolded and run locally via `agents-cli` targets and Makefile configurations.
 
 ## Security Design
@@ -59,11 +59,11 @@ graph TD
 
 Underwriting involves high-stakes financial risk. Completely autonomous decisions on borderline cases can result in substantial losses or missed opportunities. 
 - **Trigger**: When the scoring agent computes a risk score between **40 and 75**, the application is flagged as borderline.
-- **Pause & Resume**: The `hitl_review` node in [app/agent.py](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/app/agent.py#L173-L192) suspends execution using `RequestInput`. It asks the user to review the score and indicate approval. The workflow only resumes after receiving this underwriter response, recording it in the final decision.
+- **Pause & Resume**: The `hitl_review` node in [app/agent.py](app/agent.py#L173-L192) suspends execution using `RequestInput`. It asks the user to review the score and indicate approval. The workflow only resumes after receiving this underwriter response, recording it in the final decision.
 
 ## Demo Walkthrough
 
-Refer to the `Sample Test Cases` section in [README.md](file:///c:/Users/arsri/workspaces/adk-workspace/property-underwriter/README.md):
+Refer to the `Sample Test Cases` section in [README.md](README.md):
 1. **Low Risk Case**: Returns auto-approved status without manual intervention.
 2. **Borderline Risk Case**: Demonstrates the `RequestInput` dialog pausing the process for underwriter sign-off.
 3. **Security Event Case**: Highlights immediate termination when knob-and-tube wiring is submitted.

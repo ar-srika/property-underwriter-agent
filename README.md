@@ -133,19 +133,39 @@ graph TD
 ### 1. Auto-Approve (Low Risk)
 - **Input**:
   ```text
-  Property Questionnaire
-  Building Age: 5 years
-  Sprinkler System: Fully Sprinklered (Wet pipe)
-  Distance to Hydrant: 150 feet
-  Wiring: Copper
+  Property Underwriting Questionnaire
+  Policyholder Name: Alice Smith (Phone: 555-019-2834, email: alice.smith@example.com)
+  Address: 123 Maple Lane, Springfield
+  Property Details:
+  - Building Age: 2 years (brand new construction)
+  - Construction: Wood-framed structure, 2 stories
+  - Sprinkler System: Automatic wet sprinkler system present throughout
+  - Distance to nearest fire hydrant: 100 feet
+  - Active wood stove heating: No
   ```
-- **Expected**: Routes to orchestrator. Compliance agent passes. Scoring agent applies matrix (Base 50 - 20 for Sprinkler = 30). Score (30) is < 40. Decision gate routes to "auto" -> Auto-Approved.
-- **Check**: Final JSON contains `"status": "AUTO_APPROVED"` and `"overall_score": 30.0`.
+- **Expected**: Routes to orchestrator. Compliance agent passes. Scoring agent applies matrix (Base 50 - 25 for Sprinkler - 10 for building age = 15). Score (15) is < 40. Decision gate routes to "auto" -> Auto-Approved.
+- **Check**: Final JSON contains `"status": "AUTO_APPROVED"` and `"overall_score": 15.0`.
 
-### 2. Manual Review (Medium / Borderline Risk)
+### 2. Auto-Reject / Decline (High Risk)
 - **Input**:
   ```text
-  Property Questionnaire
+  Property Underwriting Questionnaire
+  Policyholder Name: Alice Smith (Phone: 555-019-2834, email: alice.smith@example.com)
+  Address: 123 Maple Lane, Springfield
+  Property Details:
+  - Building Age: 45 years (old structure)
+  - Construction: Wood-framed structure, 2 stories
+  - Sprinkler System: None
+  - Distance to nearest fire hydrant: 1200 feet (very far)
+  - Active wood stove heating: No
+  ```
+- **Expected**: Routes to orchestrator. Compliance agent validator highlights issues. Scoring agent applies matrix (Base 50 + 20 no sprinkler + 10 age penalty + 15 hydrant penalty = 95). Score (95) is > 75. Decision gate routes to "auto" -> Auto-Rejected.
+- **Check**: Final JSON contains `"status": "AUTO_REJECTED"` and `"overall_score": 95.0`.
+
+### 3. Manual Review (Medium / Borderline Risk)
+- **Input**:
+  ```text
+  Property Underwriting Questionnaire
   Policyholder Name: Alice Smith (Phone: 555-019-2834, email: alice.smith@example.com)
   Building Age: 10 years
   Sprinkler System: None
@@ -154,10 +174,10 @@ graph TD
 - **Expected**: Security checkpoint scrubs name, phone, and email. Compliance agent notes lack of sprinkler. Scoring agent applies matrix (Base 50 + No Sprinklers 20 = 70). Score (70) is in 40-75 range. Decision gate routes to "borderline" -> workflow pauses at HITL node waiting for underwriter approval.
 - **Check**: In the UI, a prompt is shown asking for Underwriter Approval. Submit approval to finalize.
 
-### 3. Immediate Reject (Prohibited Hazard / Security Event)
+### 4. Immediate Security Block (Prohibited Hazard)
 - **Input**:
   ```text
-  Property Questionnaire
+  Property Underwriting Questionnaire
   Building Age: 50 years
   Wiring: Prohibited knob-and-tube wiring
   ```
@@ -195,6 +215,10 @@ Suggested Premium Tier: Calculated baseline expense.
 
 
 ---
+
+## Demo Script
+
+A spoken presentation script is available in [DEMO_SCRIPT.txt](DEMO_SCRIPT.txt) to guide you during UI walks.
 
 ## Assets
 

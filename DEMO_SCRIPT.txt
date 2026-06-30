@@ -2,7 +2,7 @@
 Are you tired of spending hours manually auditing commercial property questionnaires and cross-referencing complex fire safety codes? Our new automated underwriting agent cuts down risk assessment from hours to seconds while maintaining absolute compliance and human oversight.
 
 [0:20 - WHAT IT IS]
-This is the Property Underwriter Risk Assessment Agent, built on the Google Agent Development Kit framework, designed specifically to parse risk questionnaires, score properties against underwriting matrices, and seamlessly coordinate human reviews.
+This is the Property Underwriter Risk Assessment Agent, built on the Google Agent Development Kit framework with the gemini-3.1-flash-lite model, designed specifically to parse risk questionnaires, score properties against underwriting matrices, and seamlessly coordinate human reviews.
 
 [0:40 - SHOW THE BANNER]
 (show assets/cover_page_banner.png)
@@ -19,9 +19,9 @@ The findings converge on a Decision Gate. If the calculated score is in the bord
 [2:00 - LIVE DEMO]
 (switch to playground at localhost:18081)
 Let me show you a live demo of three test cases in our local playground.
-First, we submit a Safe Low-Risk property questionnaire. The agent extracts a clean score of 30, bypasses human review, and auto-approves it instantly.
-Second, let us input a Borderline Risk questionnaire. Alice Smith submits an application with no sprinkler systems. The security checkpoint scrubs Alice's name, email, and phone number. The orchestrator delegates, and the scoring agent returns a score of 70. Watch as the UI halts execution and displays the "underwriter_approval" prompt. I click "Approve" (pause), and the workflow resumes, producing the finalized contract terms.
-Third, let us try a prohibited hazard. We submit an application referencing "knob-and-tube wiring". The security checkpoint identifies this prohibited hazard immediately, bypassing all sub-agents, and auto-rejects the application for safety violations.
+First, we submit a Safe Low-Risk property questionnaire. The agent applies sprinkler and new building credits, resulting in a low score of 15. The workflow auto-approves it instantly.
+Second, let us input a High-Risk property questionnaire with a building age of 45 years and a hydrant distance of 1200 feet. The scoring agent computes a high risk score of 95. The workflow bypasses manual review and automatically declines the application.
+Third, let us submit a Borderline Risk questionnaire. Alice Smith submits an application with no sprinkler systems. The security checkpoint scrubs Alice's PII. The scoring agent returns a borderline score of 70. Watch as the UI halts execution and displays the "underwriter_approval" prompt. I click "Approve" (pause), and the workflow resumes to produce the final approved report.
 
 [3:00 - SECURITY & MCP]
 (show assets/architecture_diagram.png)
